@@ -59,7 +59,7 @@
   - name: copy root .vimrc
     copy:
       src: .vimrc
-      dest: root/.vimrc
+      dest: /root/.vimrc
       owner: root
       group: root
       mode: 0644
