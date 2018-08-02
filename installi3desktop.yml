@@ -5,7 +5,7 @@
 #          Existing non root user created with full sudo
 #          If physical, the machine has an NVidia gpu
 # Author: five82
-# Repo: 
+# Repo: https://github.com/five82/voidi3config
 #
 # Thanks to addy-dclxvi for the i3 config
 # https://github.com/addy-dclxvi/i3-starterpack
