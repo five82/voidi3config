@@ -164,7 +164,11 @@
     become: yes
     when: nonfree_exists == False
 
-  - name: upgrade os packages
+  - name: upgrade os packages - step 1
+    xbps: upgrade=yes
+    become: yes
+
+  - name: upgrade os packages - step 2
     xbps: upgrade=yes
     become: yes
 
