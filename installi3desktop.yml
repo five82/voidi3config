@@ -1,0 +1,205 @@
+---
+#---------------------------------------------------------------------
+# Install/configure the i3-gaps window manager and associated packages
+# Prereqs: Void Linux with ansible and facter installed
+#          Existing non root user created with full sudo
+#          If physical, the machine has an NVidia gpu
+# Author: five82
+# Repo: 
+#
+# Thanks to addy-dclxvi for the i3 config
+# https://github.com/addy-dclxvi/i3-starterpack
+#
+# Run the playbook locally as your non root user
+# To run: ansible-playbook installi3desktop.yml
+#---------------------------------------------------------------------
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+
+  - name: create user/config directories
+    file:
+      path: "{{ ansible_user_dir }}/{{ item }}"
+      state: directory
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0755
+    with_items:
+      - Documents
+      - Downloads
+      - Pictures
+      - projects
+      - Videos
+      - .config
+      - .config/dunst
+      - .config/gtk-3.0
+      - .config/i3
+      - .config/i3status
+      - .fonts
+      - .fonts/icomoon
+      - .urxvt
+      - .urxvt/ext
+
+  - name: copy .bashrc
+    copy:
+      src: .bashrc
+      dest: "{{ ansible_user_dir }}/.bashrc"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy .vimrc
+    copy:
+      src: .vimrc
+      dest: "{{ ansible_user_dir }}/.vimrc"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy .Xresources
+    copy:
+      src: .Xresources
+      dest: "{{ ansible_user_dir }}/.Xresources"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy .xsettingsd
+    copy:
+      src: .xsettingsd
+      dest: "{{ ansible_user_dir }}/.xsettingsd"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+
+  - name: copy compton.conf
+    copy:
+      src: .config/compton.conf
+      dest: "{{ ansible_user_dir }}/.config/compton.conf"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy dunstrc
+    copy:
+      src: .config/dunst/dunstrc
+      dest: "{{ ansible_user_dir }}/.config/dunst/dunstrc"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy gtk3 settings.ini
+    copy:
+      src: .config/gtk-3.0/settings.ini
+      dest: "{{ ansible_user_dir }}/.config/gtk-3.0/settings.ini"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy i3 config
+    copy:
+      src: .config/i3/config
+      dest: "{{ ansible_user_dir }}/.config/i3/config"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy i3status config
+    copy:
+      src: .config/i3status/config
+      dest: "{{ ansible_user_dir }}/.config/i3status/config"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy feather.ttf
+    copy:
+      src: .fonts/icomoon/feather.ttf
+      dest: "{{ ansible_user_dir }}/.fonts/icomoon/feather.ttf"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy urxvt clipboard
+    copy:
+      src: .urxvt/ext/clipboard
+      dest: "{{ ansible_user_dir }}/.urxvt/ext/clipboard"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0755
+
+  - name: copy urxvt keyboard-select
+    copy:
+      src: .urxvt/ext/keyboard-select
+      dest: "{{ ansible_user_dir }}/.urxvt/ext/keyboard-select"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0755
+
+  - name: copy urxvt url-select
+    copy:
+      src: .urxvt/ext/url-select
+      dest: "{{ ansible_user_dir }}/.urxvt/ext/url-select"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0755
+
+  - name: check if non free repo exists
+    stat:
+      path=/var/db/xbps/.void-repo-nonfree-files.plist
+    register: nonfree_exists
+
+  - name: install void non free repo
+    command: xbps-install -Sy void-repo-nonfree
+    become: yes
+    when: nonfree_exists == False
+
+  - name: upgrade os packages
+    xbps: upgrade=yes
+    become: yes
+
+  - name: install xorg
+    xbps: name=xorg state=latest
+    become: yes
+  
+  - name: install packages
+    xbps: name=curl,tree,vim,i3gaps,i3lock,i3status,compton,hsetroot,rxvt-unicode,xsel,rofi,xsettingsd,lxappearance,scrot,viewnior,noto-fonts-ttf,mlocate,chromium,chromium-widevine,lightdm,lightdm-gtk3-greeter,alsa-utils,spotify,numix-themes,Thunar,docker,papirus-icon-theme,dmenu,ttf-ubuntu-font-family
+    become: yes
+
+  - name: create symlink to enable/start dbus service
+    file:
+      src: /etc/sv/dbus
+      dest: /var/service/dbus
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start lightdm service
+    file:
+      src: /etc/sv/lightdm
+      dest: /var/service/lightdm
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start docker service
+    file:
+      src: /etc/sv/docker
+      dest: /var/service/docker
+      state: link
+    become: yes
+
+  - name: install nvidia proprietary driver
+    xbps: name=nvidia state=latest
+    become: yes
+    when: facter_virtual == "physical"
+
+  - name: install virtualbox guest additions
+    xbps: name=nvidia state=latest
+    become: yes
+    when: facter_virtual == "virtualbox"
+
+  - name: add user to docker group
+    user:
+      name: "{{ ansible_user_id }}"
+      groups: docker
+      append: yes

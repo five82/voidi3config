@@ -1,0 +1,1 @@
+# voidi3config
