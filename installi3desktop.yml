@@ -3,7 +3,7 @@
 # Install/configure the i3-gaps window manager and associated packages
 # Prereqs: Void Linux with ansible and facter installed
 #          Existing non root user created with full sudo
-#          If physical, the machine has an NVidia gpu
+#          If your machine is physical, it must have an Nvidia GPU
 # Author: five82
 # Repo: https://github.com/five82/voidi3config
 #
