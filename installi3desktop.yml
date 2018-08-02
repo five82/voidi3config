@@ -56,6 +56,15 @@
       group: "{{ ansible_user_id }}"
       mode: 0644
 
+  - name: copy root .vimrc
+    copy:
+      src: .vimrc
+      dest: root/.vimrc
+      owner: root
+      group: root
+      mode: 0644
+    become: yes
+
   - name: copy .Xresources
     copy:
       src: .Xresources
