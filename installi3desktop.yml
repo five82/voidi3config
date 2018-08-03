@@ -228,6 +228,7 @@
       - papirus-icon-theme
       - dmenu
       - ttf-ubuntu-font-family
+      - mpv
 
   - name: create symlink to enable/start dbus service
     file:
