@@ -24,7 +24,7 @@
       owner: "{{ ansible_user_id }}"
       group: "{{ ansible_user_id }}"
       mode: 0755
-    with_items:
+    loop:
       - Documents
       - Downloads
       - Pictures
@@ -64,6 +64,22 @@
       group: root
       mode: 0644
     become: yes
+
+  - name: copy .gtkrc-2.0
+    copy:
+      src: .gtkrc-2.0
+      dest: "{{ ansible_user_dir }}/.gtkrc-2.0"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
+  - name: copy .gtkrc-2.0.mine
+    copy:
+      src: .gtkrc-2.0.mine
+      dest: "{{ ansible_user_dir }}/.gtkrc-2.0.mine"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
 
   - name: copy .Xresources
     copy:
@@ -157,12 +173,12 @@
   - name: check if non free repo exists
     stat:
       path=/var/db/xbps/.void-repo-nonfree-files.plist
-    register: nonfree_exists
+    register: nonfreerepo
 
   - name: install void non free repo
     command: xbps-install -Sy void-repo-nonfree
     become: yes
-    when: nonfree_exists == False
+    when: nonfreerepo.stat.islnk is not defined
 
   - name: upgrade os packages - step 1
     xbps: upgrade=yes
@@ -175,10 +191,43 @@
   - name: install xorg
     xbps: name=xorg state=latest
     become: yes
-  
+
+  # The xbps module seems to have problems managing multiple packages.
+  # So looping through these as a workaround.
   - name: install packages
-    xbps: name=curl,tree,vim,i3gaps,i3lock,i3status,compton,hsetroot,rxvt-unicode,xsel,rofi,xsettingsd,lxappearance,scrot,viewnior,noto-fonts-ttf,mlocate,chromium,chromium-widevine,lightdm,lightdm-gtk3-greeter,alsa-utils,spotify,numix-themes,Thunar,docker,papirus-icon-theme,dmenu,ttf-ubuntu-font-family
+    xbps: "name={{ item }} state=latest"
     become: yes
+    loop:
+      - cowsay
+      - curl
+      - tree
+      - vim
+      - i3-gaps
+      - i3lock
+      - i3status
+      - compton
+      - hsetroot
+      - rxvt-unicode
+      - xsel
+      - rofi
+      - xsettingsd
+      - lxappearance
+      - scrot
+      - viewnior
+      - noto-fonts-ttf
+      - mlocate
+      - chromium
+      - chromium-widevine
+      - lightdm
+      - lightdm-gtk3-greeter
+      - alsa-utils
+      - spotify
+      - numix-themes
+      - Thunar
+      - docker
+      - papirus-icon-theme
+      - dmenu
+      - ttf-ubuntu-font-family
 
   - name: create symlink to enable/start dbus service
     file:
@@ -201,13 +250,20 @@
       state: link
     become: yes
 
+  - name: create symlink to enable/start sshd service
+    file:
+      src: /etc/sv/sshd
+      dest: /var/service/sshd
+      state: link
+    become: yes
+
   - name: install nvidia proprietary driver
     xbps: name=nvidia state=latest
     become: yes
     when: facter_virtual == "physical"
 
   - name: install virtualbox guest additions
-    xbps: name=nvidia state=latest
+    xbps: name=virtualbox-ose-guest state=latest
     become: yes
     when: facter_virtual == "virtualbox"
 
@@ -216,7 +272,8 @@
       name: "{{ ansible_user_id }}"
       groups: docker
       append: yes
+    become: yes
 
-  - name: --- INSTALL COMPLETE ---
+  - name: --- COMPLETE ---
     debug:
-      msg: "Reboot to finish."
+      msg: "Install/update complete."

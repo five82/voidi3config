@@ -28,3 +28,6 @@ alias vupgrade='sudo xbps-install -Su'
 alias i3r='i3-msg reload'
 alias vii3='vim ~/.config/i3/config'
 PS1='[\u@\h \W]\$ '
+
+# pay respect to the cows
+export ANSIBLE_COW_SELECTION=random
