@@ -236,10 +236,10 @@
       state: link
     become: yes
 
-  - name: create symlink to enable/start lightdm service
+  - name: create symlink to enable/start sddm service
     file:
-      src: /etc/sv/lightdm
-      dest: /var/service/lightdm
+      src: /etc/sv/sddm
+      dest: /var/service/sddm
       state: link
     become: yes
 
