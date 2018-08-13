@@ -218,8 +218,7 @@
       - mlocate
       - chromium
       - chromium-widevine
-      - lightdm
-      - lightdm-gtk3-greeter
+      - sddm
       - alsa-utils
       - spotify
       - numix-themes
