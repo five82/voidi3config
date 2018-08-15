@@ -274,7 +274,7 @@
   - name: pull/update sddm chili project from github
     git:
       repo: https://github.com/MarianArlt/sddm-chili.git
-      dest: /usr/share/sddm/themes
+      dest: /usr/share/sddm/themes/chili
 
   - name: copy sddm.conf
     copy:
