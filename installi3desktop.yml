@@ -253,6 +253,7 @@
       - qt5-graphicaleffects
       - qt5-quickcontrols
       - qt5-svg
+      - ConsoleKit2
 
   - name: create symlink to enable/start dbus service
     file:
@@ -279,6 +280,13 @@
     file:
       src: /etc/sv/sshd
       dest: /var/service/sshd
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start consolekit service
+    file:
+      src: /etc/sv/consolekit
+      dest: /var/service/consolekit
       state: link
     become: yes
 
