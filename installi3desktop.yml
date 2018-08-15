@@ -43,7 +43,7 @@
   - name: copy wallpaper directory
     copy:
       src: wallpaper
-      dest: "{{ ansible_user_id }}/Pictures/wallpaper"
+      dest: "{{ ansible_user_dir }}/Pictures/wallpaper"
       owner: "{{ ansible_user_id }}"
       group: "{{ ansible_user_id }}"
       directory_mode: yes
