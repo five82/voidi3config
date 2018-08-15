@@ -240,6 +240,8 @@
       - figlet
       - figlet-fonts
       - fortune-mod
+      - qt5-graphicaleffects
+      - qt5-quickcontrols
 
   - name: create symlink to enable/start dbus service
     file:
