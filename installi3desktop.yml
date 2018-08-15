@@ -281,10 +281,11 @@
       state: link
     become: yes
 
-  - name: pull/update sddm chili project from github
+  - name: pull/update the sddm chili project from github
     git:
       repo: https://github.com/MarianArlt/sddm-chili.git
       dest: /usr/share/sddm/themes/chili
+      force: yes
     become: yes
 
   - name: copy sddm.conf
