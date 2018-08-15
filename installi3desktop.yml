@@ -286,6 +286,15 @@
       mode: 0644
     become: yes
 
+  - name: copy user icon
+    copy:
+      src: icons/usericon.png
+      dest: "/usr/share/sddm/faces/{{ ansible_user_id }}.face.icon"
+      owner: root
+      group: root
+      mode: 0644
+    become: yes
+
   - name: install nvidia proprietary driver
     xbps: name=nvidia state=latest
     become: yes
