@@ -275,6 +275,7 @@
     git:
       repo: https://github.com/MarianArlt/sddm-chili.git
       dest: /usr/share/sddm/themes/chili
+    become: yes
 
   - name: copy sddm.conf
     copy:
