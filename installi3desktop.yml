@@ -317,7 +317,7 @@
   - name: copy chili theme wallpaper
     copy:
       src: wallpaper/jgardner_antelope_canyon.jpg
-      dest: "/usr/share/sddm/themes/chili/assests/jgardner_antelope_canyon.jpg"
+      dest: "/usr/share/sddm/themes/chili/assets/jgardner_antelope_canyon.jpg"
       owner: root
       group: root
       mode: 0644
