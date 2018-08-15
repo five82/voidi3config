@@ -41,14 +41,14 @@
       - .urxvt
       - .urxvt/ext
 
-  - name: copy wallpaper directory
+  - name: copy wallpaper directory contents
     copy:
       src: wallpaper
       dest: "{{ ansible_user_dir }}/Pictures"
       owner: "{{ ansible_user_id }}"
       group: "{{ ansible_user_id }}"
       directory_mode: yes
-      mode: 0755
+      mode: 0644
 
   - name: copy .bashrc
     copy:
