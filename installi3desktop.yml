@@ -305,6 +305,24 @@
       mode: 0644
     become: yes
 
+  - name: copy chili theme.conf
+    copy:
+      src: files/chilitheme.conf
+      dest: "/usr/share/sddm/themes/chili/theme.conf"
+      owner: root
+      group: root
+      mode: 0644
+    become: yes
+
+  - name: copy chili theme wallpaper
+    copy:
+      src: wallpaper/jgardner_antelope_canyon.jpg
+      dest: "/usr/share/sddm/themes/chili/assests/jgardner_antelope_canyon.jpg"
+      owner: root
+      group: root
+      mode: 0644
+    become: yes
+
   - name: install nvidia proprietary driver
     xbps: name=nvidia state=latest
     become: yes
