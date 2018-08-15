@@ -228,6 +228,9 @@
       - dmenu
       - ttf-ubuntu-font-family
       - mpv
+      - figlet
+      - figlet-fonts
+      - fortune-mod
 
   - name: create symlink to enable/start dbus service
     file:
