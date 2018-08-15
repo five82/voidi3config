@@ -170,6 +170,14 @@
       group: "{{ ansible_user_id }}"
       mode: 0755
 
+  - name: configure xbps to point to US mirror
+    copy:
+      src: 00-repository-main.conf
+      dest: "/etc/xbps.d/00-repository-main.conf"
+      owner: root
+      group: root
+      mode: 0644
+
   - name: check if non free repo exists
     stat:
       path=/var/db/xbps/.void-repo-nonfree-files.plist
