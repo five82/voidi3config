@@ -177,6 +177,7 @@
       owner: root
       group: root
       mode: 0644
+    become: yes
 
   - name: check if non free repo exists
     stat:
