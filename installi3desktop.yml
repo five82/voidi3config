@@ -53,7 +53,7 @@
   - name: copy user wallpaper
     copy:
       src: wallpaper/janKaluza_wave.jpg
-      dest: "{{ ansible_user_dir }}/.wallpaper.png"
+      dest: "{{ ansible_user_dir }}/.wallpaper.jpg"
       owner: "{{ ansible_user_id }}"
       group: "{{ ansible_user_id }}"
       mode: 0644
