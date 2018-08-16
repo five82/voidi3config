@@ -50,6 +50,14 @@
       directory_mode: yes
       mode: 0644
 
+  - name: copy user wallpaper
+    copy:
+      src: wallpaper/janKaluza_wave.jpg
+      dest: "{{ ansible_user_dir }}/.wallpaper.png"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      mode: 0644
+
   - name: copy .bashrc
     copy:
       src: dotfiles/.bashrc
@@ -326,8 +334,8 @@
 
   - name: copy chili theme wallpaper
     copy:
-      src: wallpaper/jgardner_antelope_canyon.jpg
-      dest: "/usr/share/sddm/themes/chili/assets/jgardner_antelope_canyon.jpg"
+      src: wallpaper/cantrell_waterfall.jpg
+      dest: "/usr/share/sddm/themes/chili/assets/custombackground.jpg"
       owner: root
       group: root
       mode: 0644
