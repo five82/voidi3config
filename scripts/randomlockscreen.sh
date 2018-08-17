@@ -4,4 +4,4 @@
 
 file="$(ls -1 ~/Pictures/wallpaper/ | shuf -n 1)"
 
-i3lock-color -i ~/Pictures/wallpaper/${file}
+i3lock -i ~/Pictures/wallpaper/${file}
