@@ -45,7 +45,7 @@
   - name: copy scripts directory contents
     copy:
       src: scripts
-      dest: "scripts"
+      dest: ""{{ ansible_user_dir }}"
       owner: "{{ ansible_user_id }}"
       group: "{{ ansible_user_id }}"
       directory_mode: yes
