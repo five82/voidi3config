@@ -49,7 +49,7 @@
       owner: "{{ ansible_user_id }}"
       group: "{{ ansible_user_id }}"
       directory_mode: yes
-      mode: 0644
+      mode: 0755
 
   - name: copy wallpaper directory contents
     copy:
