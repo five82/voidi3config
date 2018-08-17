@@ -273,41 +273,6 @@
       - qt5-svg
       - ConsoleKit2
 
-  - name: create symlink to enable/start dbus service
-    file:
-      src: /etc/sv/dbus
-      dest: /var/service/dbus
-      state: link
-    become: yes
-
-  - name: create symlink to enable/start sddm service
-    file:
-      src: /etc/sv/sddm
-      dest: /var/service/sddm
-      state: link
-    become: yes
-
-  - name: create symlink to enable/start docker service
-    file:
-      src: /etc/sv/docker
-      dest: /var/service/docker
-      state: link
-    become: yes
-
-  - name: create symlink to enable/start sshd service
-    file:
-      src: /etc/sv/sshd
-      dest: /var/service/sshd
-      state: link
-    become: yes
-
-  - name: create symlink to enable/start consolekit service
-    file:
-      src: /etc/sv/consolekit
-      dest: /var/service/consolekit
-      state: link
-    become: yes
-
   - name: pull/update the sddm chili project from github
     git:
       repo: https://github.com/MarianArlt/sddm-chili.git
@@ -366,6 +331,41 @@
       name: "{{ ansible_user_id }}"
       groups: docker
       append: yes
+    become: yes
+
+  - name: create symlink to enable/start dbus service
+    file:
+      src: /etc/sv/dbus
+      dest: /var/service/dbus
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start sddm service
+    file:
+      src: /etc/sv/sddm
+      dest: /var/service/sddm
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start docker service
+    file:
+      src: /etc/sv/docker
+      dest: /var/service/docker
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start sshd service
+    file:
+      src: /etc/sv/sshd
+      dest: /var/service/sshd
+      state: link
+    become: yes
+
+  - name: create symlink to enable/start consolekit service
+    file:
+      src: /etc/sv/consolekit
+      dest: /var/service/consolekit
+      state: link
     become: yes
 
   - name: --- COMPLETE ---
