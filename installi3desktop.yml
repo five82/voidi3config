@@ -30,6 +30,7 @@
       - Pictures
       - Pictures/wallpaper
       - projects
+      - scripts
       - Videos
       - .config
       - .config/dunst
@@ -40,6 +41,15 @@
       - .fonts/icomoon
       - .urxvt
       - .urxvt/ext
+
+  - name: copy scripts directory contents
+    copy:
+      src: scripts
+      dest: "scripts"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_id }}"
+      directory_mode: yes
+      mode: 0644
 
   - name: copy wallpaper directory contents
     copy:
